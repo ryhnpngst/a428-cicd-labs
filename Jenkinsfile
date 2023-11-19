@@ -22,7 +22,7 @@ pipeline {
                     def userInput = input(
                         id: 'userInput',
                         message: 'Lanjutkan ke tahap Deploy?',
-                        parameters: [boolean(name: 'PROCEED', defaultValue: false, description: 'Pilih true untuk melanjutkan atau false untuk menghentikan.')]
+                        parameters: [booleanPilihan(name: 'PROCEED', defaultValue: false, description: 'Pilih true untuk melanjutkan atau false untuk menghentikan.')]
                     )
                     if (!userInput) {
                         error('Pengguna memilih Abort. Menghentikan eksekusi pipeline.')
