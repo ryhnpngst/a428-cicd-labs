@@ -20,11 +20,11 @@ pipeline {
             steps {
                 script {
                     def userInput = input(
+                        id: 'userInput',
                         message: 'Lanjutkan deploy? (Klik "Proceed" untuk melanjutkan)',
-                        ok: 'Proceed'
+                        parameters: [boolean(defaultValue: false, description: 'Pilih true untuk melanjutkan atau false untuk menghentikan', name: 'PROCEED')]
                     )
-                    if (userInput != 'Proceed') {
-                        currentBuild.result = 'ABORTED'
+                    if (!userInput.PROCEED) {
                         error('Pengguna memilih untuk tidak melanjutkan. Menghentikan eksekusi pipeline.')
                     }
                 }
