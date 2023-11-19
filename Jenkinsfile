@@ -18,16 +18,10 @@ pipeline {
         }
         stage('Manual Approval') {
             steps {
-                script {
-                    def userInput = input(
-                        id: 'userInput',
-                        message: 'Lanjutkan deploy? (Klik "Proceed" untuk melanjutkan)',
-                        parameters: [booleanPilihan(defaultValue: false, description: 'Pilih true untuk melanjutkan atau false untuk menghentikan', name: 'PROCEED')]
-                    )
-                    if (!userInput.PROCEED) {
-                        error('Pengguna memilih untuk tidak melanjutkan. Menghentikan eksekusi pipeline.')
-                    }
+                timeout(time: 1, unit: "MINUTES") {
+                    input message: 'Do you want to approve the deployment?', ok: 'Yes'
                 }
+                echo "Initiating deployment"
             }
         }     
         stage('Deploy') {
