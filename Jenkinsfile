@@ -20,16 +20,15 @@ pipeline {
             steps {
                 script {
                     def userInput = input(
-                        id: 'userInput',
-                        message: 'Lanjutkan ke tahap Deploy?',
-                        parameters: [booleanPilihan(name: 'PROCEED', defaultValue: false, description: 'Pilih true untuk melanjutkan atau false untuk menghentikan.')]
+                        message: 'Lanjutkan deploy? (Klik "Proceed" untuk melanjutkan)',
+                        ok: 'Proceed'
                     )
-                    if (!userInput) {
-                        error('Pengguna memilih Abort. Menghentikan eksekusi pipeline.')
+                    if (userInput != 'Proceed') {
+                        error('Pengguna memilih untuk tidak melanjutkan. Menghentikan eksekusi pipeline.')
                     }
                 }
             }
-        }
+        }     
         stage('Deploy') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
