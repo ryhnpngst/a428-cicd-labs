@@ -16,6 +16,11 @@ pipeline {
                 sh './jenkins/scripts/test.sh' 
             }
         }
+        stage('Manual Approval') {
+            steps {
+                input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', parameters: [boolean(defaultValue: false, description: 'Pilih Proceed untuk melanjutkan atau Cancel untuk menghentikan', name: 'Proceed')]
+            }
+        }
         stage('Deploy') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
