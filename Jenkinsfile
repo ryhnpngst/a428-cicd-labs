@@ -18,7 +18,21 @@ pipeline {
         }
         stage('Manual Approval') {
             steps {
-                input message: 'Lanjutkan ke tahap Deploy?', ok: 'Proceed', parameters: [eksekusi(defaultValue: false, description: 'Pilih Proceed untuk melanjutkan atau Cancel untuk menghentikan', name: 'Proceed')]
+                script {
+                    def userInput = input(
+                        id: 'userInput',
+                        message: 'Lanjutkan ke tahap Deploy?',
+                        parameters: [
+                            [$class: 'BooleanParameterDefinition',
+                            defaultValue: false,
+                            description: 'Pilih Proceed untuk melanjutkan atau Abort untuk menghentikan.',
+                            name: 'PROCEED']
+                        ]
+                    )
+                    if (!userInput.PROCEED) {
+                        error('Pengguna memilih Abort. Menghentikan eksekusi pipeline.')
+                    }
+                }
             }
         }
         stage('Deploy') {
