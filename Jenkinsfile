@@ -19,7 +19,7 @@ pipeline {
         stage('Manual Approval') {
             steps {
                 timeout(time: 1, unit: "MINUTES") {
-                    input message: 'Do you want to approve the deployment?', ok: 'Yes'
+                    input message: 'Lanjutkan ke tahap Deploy', ok: 'Yes'
                 }
                 echo "Initiating deployment"
             }
