@@ -24,6 +24,7 @@ pipeline {
                         ok: 'Proceed'
                     )
                     if (userInput != 'Proceed') {
+                        currentBuild.result = 'ABORTED'
                         error('Pengguna memilih untuk tidak melanjutkan. Menghentikan eksekusi pipeline.')
                     }
                 }
